@@ -8,14 +8,15 @@ const HALF_YEAR = new Date(START);
 HALF_YEAR.setMonth(HALF_YEAR.getMonth() + 6);
 
 // Пока не наступили полгода — настоящий текст подменяем случайными буквами,
-// чтобы его нельзя было разглядеть сквозь размытие
+// романтическими словами из love-words.js, чтобы его нельзя было разглядеть
+const randomWord = () => LOVE_WORDS[Math.floor(Math.random() * LOVE_WORDS.length)];
 const secrets = [...document.querySelectorAll('[data-secret]')].map((el) => {
   const real = el.textContent;
   if (Date.now() < HALF_YEAR) {
-    const abc = 'абвгдежзиклмнопрстуфхцчшэюя';
-    el.textContent = [...real].map((ch) =>
-      ch === ' ' ? ' ' : abc[Math.floor(Math.random() * abc.length)]
-    ).join('');
+    // набираем слова примерно до длины настоящего текста
+    let fake = randomWord();
+    while (fake.length < real.length - 3) fake += ' ' + randomWord();
+    el.textContent = fake;
   }
   return { el, real };
 });
