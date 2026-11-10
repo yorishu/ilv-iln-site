@@ -1,2 +1,5 @@
 # Оригиналы фото (HEIC с GPS) — не публикуем
 photos-src/
+
+# Кэш Python
+__pycache__/
