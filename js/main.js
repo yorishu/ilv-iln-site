@@ -55,6 +55,7 @@ function updateLock() {
     revealSecrets();
     $('heroHalf').classList.remove('locked');
     $('photoUs').classList.remove('locked');
+    document.querySelectorAll('.locked-section').forEach((sec) => sec.classList.remove('is-locked'));
     card.classList.add('unlocking');
     card.classList.remove('locked');
     return;
@@ -121,6 +122,22 @@ function showEnvelopeBubble() {
   clearTimeout(bubbleTimer);
   bubbleTimer = setTimeout(() => { bubble.hidden = true; }, 3500);
 }
+// Разделы «Наши моменты», «За что я тебя люблю», «Наши мечты» — до полгода закрыты
+document.querySelectorAll('.locked-section').forEach((sec) => {
+  const bubble = sec.querySelector('.lock-bubble');
+  let timer;
+  sec.addEventListener('click', () => {
+    if (!sec.classList.contains('is-locked')) return;
+    const mins = Math.max(1, Math.ceil((HALF_YEAR - Date.now()) / 60000));
+    bubble.querySelector('.env-bubble__text').textContent =
+      `Ого, ещё ${mins.toLocaleString('ru-RU')} ${plural(mins, ['минута', 'минуты', 'минут'])}, а ты уже спешишь ${sec.dataset.verb}!`;
+    bubble.hidden = false;
+    bubble.classList.remove('is-pop'); void bubble.offsetWidth; bubble.classList.add('is-pop');
+    clearTimeout(timer);
+    timer = setTimeout(() => { bubble.hidden = true; }, 3500);
+  });
+});
+
 let envelopeOpened = false;
 envelope.addEventListener('click', async () => {
   if (envelopeOpened) return;
