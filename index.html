@@ -44,6 +44,10 @@
         <svg viewBox="0 0 24 24"><path d="M6 6l9 6-9 6zM16 6h2v12h-2z" fill="currentColor"/></svg>
       </button>
       <audio id="audio" preload="none"></audio>
+      <div class="player__hint" id="playerHint" role="status" hidden>
+        Нажми на пластинку, чтобы включить нашу песню 🎵
+        <button class="player__hint-close" id="playerHintClose" aria-label="Закрыть подсказку">×</button>
+      </div>
     </div>
     <p class="script">Серёжа &amp; Илона</p>
     <h1><span class="blur-word locked" id="heroHalf" data-secret>Полгода</span><br><em>вместе</em></h1>

@@ -301,4 +301,16 @@ $('bigHeart').addEventListener('click', (ev) => {
   $('nextBtn').hidden = tracks.length < 2;
   load(0);
   player.hidden = false;
+
+  // Подсказка: появляется через 2 с, пропадает после включения, по крестику или через 12 с
+  const hint = $('playerHint');
+  const hideHint = () => { hint.hidden = true; clearTimeout(hintTimer); };
+  let hintTimer;
+  setTimeout(() => {
+    if (!audio.paused) return;
+    hint.hidden = false;
+    hintTimer = setTimeout(hideHint, 12000);
+  }, 2000);
+  audio.addEventListener('play', hideHint);
+  $('playerHintClose').addEventListener('click', hideHint);
 })();
