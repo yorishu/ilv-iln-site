@@ -319,5 +319,5 @@ svg { width: 100%; height: 100%; }
 
 /* Фото 6 скрыто до полгода */
 .polaroid--dark > img, .polaroid--dark figcaption { transition: filter 1.2s var(--ease); }
-.polaroid--dark.locked > img { filter: url(#pixelate) blur(6px); }
+.polaroid--dark.locked > img { filter: url(#pixelate) blur(6px); pointer-events: none; -webkit-touch-callout: none; }
 .polaroid--dark.locked figcaption { filter: url(#pixelate) blur(3px); user-select: none; }
