@@ -97,6 +97,25 @@ function spawnPetal() {
 }
 if (!reduceMotion) setInterval(spawnPetal, 900);
 
+// 2 июня: по нажатию — спираль разноцветных сердец из большой точки
+const special = document.querySelector('.timeline li.special');
+if (special) special.addEventListener('click', () => {
+  if (reduceMotion) return;
+  const r = special.getBoundingClientRect();
+  const cx = r.left + 2 - 23, cy = r.top + 2 + 31; // центр большой точки (+2px рамка)
+  const colors = ['#E05A7A', '#B05CC9', '#FF8FAB', '#F4A261', '#C9184A'];
+  for (let i = 0; i < 18; i++) {
+    const el = document.createElement('span');
+    const size = 12 + Math.random() * 12;
+    el.className = 'spiral';
+    el.innerHTML = heartSvg;
+    el.style.cssText = `left:${cx - size / 2}px;top:${cy - size / 2}px;width:${size}px;height:${size}px;` +
+      `color:${colors[i % colors.length]};--a:${i * 20}deg;--d:${70 + Math.random() * 90}px;animation-delay:${i * 25}ms`;
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
+});
+
 // Салют из сердечек на финальном сердце
 $('bigHeart').addEventListener('click', (ev) => {
   const r = ev.currentTarget.getBoundingClientRect();
