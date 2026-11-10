@@ -242,6 +242,32 @@ svg { width: 100%; height: 100%; }
 .env-stage .hint { margin: 1.2rem 0 0; transition: opacity .3s; }
 .env-stage.is-done { opacity: 0; transform: translateY(40px); }
 .env-stage[hidden] { display: none; }
+.env-stage { position: relative; }
+/* Смайлик с подсказкой, пока конверт заперт */
+.env-bubble {
+  position: absolute; left: 50%; top: 0; z-index: 5;
+  width: min(300px, calc(100% - 16px));
+  display: flex; align-items: center; gap: .7rem;
+  background: var(--card); border-radius: 18px; padding: .8rem 1rem;
+  box-shadow: var(--shadow); font-weight: 600; font-size: .95rem; line-height: 1.35;
+  transform: translateX(-50%);
+}
+.env-bubble::after {
+  content: ''; position: absolute; left: 50%; bottom: -8px; width: 16px; height: 16px;
+  background: var(--card); transform: translateX(-50%) rotate(45deg);
+}
+.env-bubble__face { font-size: 2.2rem; line-height: 1; }
+.env-bubble.is-pop { animation: bubble-pop .5s var(--ease) both; }
+@keyframes bubble-pop {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(70px) scale(.4); }
+  70%  { opacity: 1; transform: translateX(-50%) translateY(-6px) scale(1.04); }
+  100% { transform: translateX(-50%); }
+}
+.env.is-shake { animation: env-shake .45s ease-in-out; }
+@keyframes env-shake {
+  20% { transform: rotate(-4deg); } 40% { transform: rotate(4deg); }
+  60% { transform: rotate(-2deg); } 80% { transform: rotate(2deg); }
+}
 .env {
   position: relative; width: min(320px, 100%); aspect-ratio: 3 / 2;
   transition: transform .3s var(--ease); filter: drop-shadow(0 12px 22px rgba(214, 69, 106, .22));

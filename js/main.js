@@ -101,9 +101,32 @@ function typeLetter() {
   const t = setInterval(() => {
     p.textContent = text.slice(0, ++i);
     if (i >= text.length) clearInterval(t);
-  }, 45);
+  }, 36); // ~40 секунд на всё письмо
 }
+// Пока не наступили полгода — конверт заперт, вылезает смайлик
+let bubbleTimer;
+function showEnvelopeBubble() {
+  const bubble = $('envBubble');
+  const mins = Math.max(1, Math.ceil((HALF_YEAR - Date.now()) / 60000));
+  const n = mins.toLocaleString('ru-RU');
+  $('envBubbleText').textContent =
+    `Ого, ещё ${n} ${plural(mins, ['минута', 'минуты', 'минут'])}, а ты уже спешишь почитать!`;
+  bubble.hidden = false;
+  bubble.classList.remove('is-pop');
+  void bubble.offsetWidth; // перезапуск анимации при повторном нажатии
+  bubble.classList.add('is-pop');
+  envelope.classList.remove('is-shake');
+  void envelope.offsetWidth;
+  envelope.classList.add('is-shake');
+  clearTimeout(bubbleTimer);
+  bubbleTimer = setTimeout(() => { bubble.hidden = true; }, 3500);
+}
+let envelopeOpened = false;
 envelope.addEventListener('click', async () => {
+  if (envelopeOpened) return;
+  if (Date.now() < HALF_YEAR && !forceUnlock) { showEnvelopeBubble(); return; }
+  envelopeOpened = true;
+  $('envBubble').hidden = true;
   const stage = $('envStage');
   const letter = $('letter');
   if (!reduceMotion) {
@@ -122,7 +145,7 @@ envelope.addEventListener('click', async () => {
     await wait(1100);
   }
   typeLetter();
-}, { once: true });
+});
 
 // Падающие сердечки
 function spawnPetal() {
