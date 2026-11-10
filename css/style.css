@@ -100,8 +100,8 @@ svg { width: 100%; height: 100%; }
   background-size: 100% 100%, 300% 300%;
   animation: border-flow 6s linear infinite, glow 2.8s ease-in-out infinite;
 }
-.timeline li.special h3 {
-  font-size: 1.6rem;
+.timeline li.special h3 { font-size: 1.6rem; }
+.timeline li.special h3 .grad {
   background: linear-gradient(90deg, var(--accent), #B05CC9);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
