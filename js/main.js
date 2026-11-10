@@ -240,6 +240,7 @@ $('bigHeart').addEventListener('click', (ev) => {
     }, 75); // ~1,5 с плавного нарастания
   }
   async function play() {
+    ensureGain();
     try { await audio.play(); fadeIn(); } catch (e) { /* браузер не дал запустить */ }
   }
   audio.addEventListener('play', () => {

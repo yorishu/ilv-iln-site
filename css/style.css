@@ -481,7 +481,12 @@ svg { width: 100%; height: 100%; }
 .player.is-playing .player__btn:hover .player__icon--pause,
 .player.is-playing .player__btn:focus-visible .player__icon--pause { opacity: 1; }
 .player__info { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
-.player__label { font-family: 'Marck Script', cursive; color: var(--accent); font-size: 1rem; }
+.player__vol {
+  width: 36px; height: 36px; flex: none; border-radius: 50%;
+  font-size: 1.15rem; line-height: 1; display: grid; place-items: center;
+}
+.player__vol.is-bump { animation: vol-bump .3s var(--ease); }
+@keyframes vol-bump { 50% { transform: scale(1.35); } }
 .player__title {
   font-size: .8rem; font-weight: 600; max-width: 150px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
