@@ -28,11 +28,12 @@ function plural(n, forms) {
   const m10 = n % 10, m100 = n % 100;
   return forms[m10 === 1 && m100 !== 11 ? 0 : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? 1 : 2];
 }
+let forceUnlock = false;
 function updateLock() {
   const card = $('realHalfYear');
   if (!card || !card.classList.contains('locked')) return;
   const left = HALF_YEAR - Date.now();
-  if (left <= 0) {
+  if (left <= 0 || forceUnlock) {
     revealSecrets();
     $('heroHalf').classList.remove('locked');
     card.classList.add('unlocking');
@@ -113,6 +114,19 @@ if (special) special.addEventListener('click', () => {
       `color:${colors[i % colors.length]};--a:${i * 20}deg;--d:${70 + Math.random() * 90}px;animation-delay:${i * 25}ms`;
     document.body.appendChild(el);
     el.addEventListener('animationend', () => el.remove());
+  }
+});
+
+// Дебаг: клик по слову «начало» в финале → пароль → открыть всё скрытое
+const DEBUG_PASSWORD = '0206'; // поменять на свой
+$('debugUnlock').addEventListener('click', () => {
+  const pass = prompt('Пароль:');
+  if (pass === null) return;
+  if (pass === DEBUG_PASSWORD) {
+    forceUnlock = true;
+    updateLock();
+  } else {
+    alert('Неверный пароль');
   }
 });
 
