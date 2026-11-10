@@ -256,6 +256,7 @@ svg { width: 100%; height: 100%; }
   content: ''; position: absolute; left: 50%; bottom: -8px; width: 16px; height: 16px;
   background: var(--card); transform: translateX(-50%) rotate(45deg);
 }
+.env-bubble[hidden] { display: none; }
 .env-bubble__face { font-size: 2.2rem; line-height: 1; }
 .env-bubble.is-pop { animation: bubble-pop .5s var(--ease) both; }
 @keyframes bubble-pop {
