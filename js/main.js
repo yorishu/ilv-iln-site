@@ -147,6 +147,17 @@ envelope.addEventListener('click', async () => {
   typeLetter();
 });
 
+// «Любить друг друга всю жизнь!» — выполнено навсегда, снять галочку нельзя
+document.querySelectorAll('[data-forever]').forEach((box) => {
+  box.addEventListener('click', (e) => {
+    e.preventDefault(); // галочка остаётся
+    const li = box.closest('li');
+    li.classList.remove('is-nope');
+    void li.offsetWidth;
+    li.classList.add('is-nope');
+  });
+});
+
 // Падающие сердечки
 function spawnPetal() {
   const el = document.createElement('span');

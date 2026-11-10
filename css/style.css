@@ -433,3 +433,8 @@ svg { width: 100%; height: 100%; }
   0%, 100% { box-shadow: 0 0 12px 2px rgba(246, 193, 119, .45), 0 10px 30px rgba(232, 167, 78, .25); }
   50%      { box-shadow: 0 0 28px 8px rgba(246, 193, 119, .8),  0 10px 40px rgba(232, 167, 78, .45); }
 }
+
+/* Мечта, которая уже выполнена — и снять галочку нельзя */
+.plans__forever { box-shadow: 0 0 0 2px var(--accent), var(--shadow); }
+.plans__forever label { font-weight: 700; }
+.plans__forever.is-nope { animation: env-shake .45s ease-in-out; }
