@@ -17,11 +17,11 @@
   <!-- Фильтр пикселизации -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <filter id="pixelate" x="0" y="0" width="100%" height="100%">
-      <feFlood x="3" y="3" width="2" height="2"/>
-      <feComposite width="8" height="8"/>
+      <feFlood x="6" y="6" width="2" height="2"/>
+      <feComposite width="14" height="14"/>
       <feTile result="grid"/>
       <feComposite in="SourceGraphic" in2="grid" operator="in"/>
-      <feMorphology operator="dilate" radius="4"/>
+      <feMorphology operator="dilate" radius="7"/>
     </filter>
   </svg>
 
