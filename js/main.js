@@ -1,5 +1,5 @@
 // Дата начала отношений — поменять на настоящую
-const START = new Date('2026-05-10T00:00:00');
+const START = new Date('2026-06-02T22:30:00');
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const heartSvg = '<svg viewBox="0 0 24 24"><use href="#heart"/></svg>';
 
