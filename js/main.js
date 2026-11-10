@@ -3,9 +3,49 @@ const START = new Date('2026-06-02T22:30:00');
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const heartSvg = '<svg viewBox="0 0 24 24"><use href="#heart"/></svg>';
 
+// Настоящие полгода: START + 6 месяцев
+const HALF_YEAR = new Date(START);
+HALF_YEAR.setMonth(HALF_YEAR.getMonth() + 6);
+
+// Пока не наступили полгода — настоящий текст подменяем случайными буквами,
+// чтобы его нельзя было разглядеть сквозь размытие
+const secrets = [...document.querySelectorAll('[data-secret]')].map((el) => {
+  const real = el.textContent;
+  if (Date.now() < HALF_YEAR) {
+    const abc = 'абвгдежзиклмнопрстуфхцчшэюя';
+    el.textContent = [...real].map((ch) =>
+      ch === ' ' ? ' ' : abc[Math.floor(Math.random() * abc.length)]
+    ).join('');
+  }
+  return { el, real };
+});
+const revealSecrets = () => secrets.forEach(({ el, real }) => (el.textContent = real));
+
 // Счётчик
 const $ = (id) => document.getElementById(id);
+function plural(n, forms) {
+  const m10 = n % 10, m100 = n % 100;
+  return forms[m10 === 1 && m100 !== 11 ? 0 : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? 1 : 2];
+}
+function updateLock() {
+  const card = $('realHalfYear');
+  if (!card || !card.classList.contains('locked')) return;
+  const left = HALF_YEAR - Date.now();
+  if (left <= 0) {
+    revealSecrets();
+    $('heroHalf').classList.remove('locked');
+    card.classList.add('unlocking');
+    card.classList.remove('locked');
+    return;
+  }
+  const d = Math.floor(left / 86400000);
+  const h = Math.floor(left / 3600000) % 24;
+  card.querySelector('.lock-note').textContent = d > 0
+    ? `🔒 Откроется через ${d} ${plural(d, ['день', 'дня', 'дней'])}`
+    : `🔒 Откроется через ${h} ${plural(h, ['час', 'часа', 'часов'])}… совсем скоро`;
+}
 function tick() {
+  updateLock();
   let s = Math.max(0, Math.floor((Date.now() - START) / 1000));
   $('c-days').textContent = Math.floor(s / 86400);
   $('c-hours').textContent = Math.floor(s / 3600) % 24;

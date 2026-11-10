@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Полгода вместе</title>
+  <title>Серёжа &amp; Илона</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Nunito:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
@@ -14,13 +14,23 @@
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <symbol id="heart" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.2C.3 8.4 2.2 4 6.3 4c2.3 0 3.9 1.3 5.7 3.4C13.8 5.3 15.4 4 17.7 4 21.8 4 23.7 8.4 22 11.8 19.5 16.4 12 21 12 21z" fill="currentColor"/></symbol>
   </svg>
+  <!-- Фильтр пикселизации -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="pixelate" x="0" y="0" width="100%" height="100%">
+      <feFlood x="3" y="3" width="2" height="2"/>
+      <feComposite width="8" height="8"/>
+      <feTile result="grid"/>
+      <feComposite in="SourceGraphic" in2="grid" operator="in"/>
+      <feMorphology operator="dilate" radius="4"/>
+    </filter>
+  </svg>
 
   <div class="petals" aria-hidden="true"></div>
 
   <!-- 1. Hero -->
   <header class="hero">
     <p class="script">Серёжа &amp; Илона</p>
-    <h1>Полгода<br><em>вместе</em></h1>
+    <h1><span class="blur-word locked" id="heroHalf" data-secret>Полгода</span><br><em>вместе</em></h1>
     <p class="hero__date">с <time id="startDate" datetime="2026-06-02T22:30">2 июня 2026</time></p>
     <a href="#counter" class="scroll-down" aria-label="Листать вниз">
       <svg viewBox="0 0 24 24" width="28" height="28"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -46,7 +56,8 @@
         <li class="reveal"><time>22 апреля</time><h3>Знакомство 📱</h3><p>Первое сообщение в случайный вечер среды &lt;3</p></li>
         <li class="reveal"><time>2 июня</time><h3>Мы вместе</h3><p>Тот самый двор, та самая лавочка</p></li>
         <li class="reveal"><time>10 августа</time><h3>Автовокзал</h3><p>Ты проводила меня к моему незабываемому опыту, через который я понял, насколько сильно я дорожу тобой</p></li>
-        <li class="reveal"><time>2 ноября</time><h3>Полгода!</h3><p>И это только начало.</p></li>
+        <li class="reveal"><time>2 ноября</time><h3>«Полгода» 😂</h3><p>Так ждали, что отметили на месяц раньше</p></li>
+        <li class="reveal locked" id="realHalfYear"><span class="lock-note" aria-live="polite"></span><time>2 декабря</time><h3 data-secret>Полгода!</h3><p data-secret>И это только начало.</p></li>
       </ol>
     </section>
 

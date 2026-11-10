@@ -78,6 +78,16 @@ svg { width: 100%; height: 100%; }
   width: 14px; height: 14px; border-radius: 50%; background: var(--accent);
   box-shadow: 0 0 0 4px var(--peach);
 }
+.timeline li.locked > :not(.lock-note) { filter: url(#pixelate) blur(3px); user-select: none; }
+.lock-note { display: none; }
+.blur-word { display: inline-block; transition: filter 1.2s var(--ease); }
+.blur-word.locked { filter: url(#pixelate) blur(6px); user-select: none; }
+.timeline li.locked .lock-note {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  position: absolute; inset: 0; z-index: 1; padding: 1rem;
+  font-weight: 700; color: var(--accent);
+}
+.timeline li.unlocking > * { transition: filter 1.2s var(--ease); }
 .timeline time { color: var(--accent); font-weight: 700; font-size: .9rem; }
 .timeline h3 { font-size: 1.3rem; margin: .2rem 0; }
 
