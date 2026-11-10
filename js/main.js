@@ -149,6 +149,7 @@ envelope.addEventListener('click', async () => {
 
 // «Любить друг друга всю жизнь!» — выполнено навсегда, снять галочку нельзя
 document.querySelectorAll('[data-forever]').forEach((box) => {
+  box.checked = true; // браузер мог восстановить старое состояние формы
   box.addEventListener('click', (e) => {
     e.preventDefault(); // галочка остаётся
     const li = box.closest('li');
