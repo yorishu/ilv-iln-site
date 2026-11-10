@@ -89,20 +89,39 @@ document.querySelectorAll('.card').forEach((card) =>
   card.addEventListener('click', () => card.classList.toggle('is-flipped'))
 );
 
-// Письмо с эффектом печатной машинки
+// Письмо: печать слетает → клапан открывается → листок вытаскивается →
+// конверт уходит → письмо разворачивается → текст печатается
 const envelope = $('envelope');
-envelope.addEventListener('click', () => {
-  const letter = $('letter');
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+function typeLetter() {
   const p = $('letterText');
   const text = p.dataset.text;
-  envelope.hidden = true;
-  letter.hidden = false;
   if (reduceMotion) { p.textContent = text; return; }
   let i = 0;
   const t = setInterval(() => {
     p.textContent = text.slice(0, ++i);
     if (i >= text.length) clearInterval(t);
   }, 45);
+}
+envelope.addEventListener('click', async () => {
+  const stage = $('envStage');
+  const letter = $('letter');
+  if (!reduceMotion) {
+    stage.classList.add('is-open-stage');
+    envelope.classList.add('is-open');    // печать + клапан
+    await wait(800);
+    envelope.classList.add('is-pulled');  // листок выезжает
+    await wait(1200);
+    stage.classList.add('is-done');       // конверт уходит вниз
+    await wait(500);
+  }
+  stage.hidden = true;
+  letter.hidden = false;
+  if (!reduceMotion) {
+    letter.classList.add('is-unfolding');
+    await wait(1100);
+  }
+  typeLetter();
 }, { once: true });
 
 // Падающие сердечки

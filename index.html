@@ -93,10 +93,16 @@
     <!-- 6. Письмо -->
     <section class="section">
       <h2 class="reveal">Тебе письмо</h2>
-      <button class="envelope reveal" id="envelope" aria-label="Открыть письмо">
-        <span class="envelope__flap"></span>
-        <span class="envelope__seal"><svg><use href="#heart"/></svg></span>
-      </button>
+      <div class="env-stage reveal" id="envStage">
+        <button class="env" id="envelope" aria-label="Открыть письмо">
+          <span class="env__back"></span>
+          <span class="env__paper" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="env__pocket"></span>
+          <span class="env__flap"></span>
+          <span class="env__seal"><svg><use href="#heart"/></svg></span>
+        </button>
+        <p class="hint">нажми на конверт</p>
+      </div>
       <div class="letter" id="letter" hidden>
         <p id="letterText" data-text="Илона, моя любимая, сегодня ровно полгода, как мы вместе. Здесь будет твоё письмо…"></p>
       </div>
