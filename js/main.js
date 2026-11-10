@@ -217,3 +217,43 @@ $('bigHeart').addEventListener('click', (ev) => {
     el.addEventListener('animationend', () => el.remove());
   }
 });
+
+// Плеер «наша песня» (треки — music/playlist.js, собирается scripts/build_playlist.py)
+(() => {
+  const tracks = window.PLAYLIST || [];
+  if (!tracks.length) return;
+  const player = $('player'), audio = $('audio'), cover = $('playerCover');
+  let idx = 0;
+  function load(i) {
+    idx = (i + tracks.length) % tracks.length;
+    const t = tracks[idx];
+    audio.src = t.src;
+    $('playerTitle').textContent = t.artist ? `${t.artist} — ${t.title}` : t.title;
+    $('playerTitle').title = $('playerTitle').textContent;
+    if (t.cover) { cover.src = t.cover; cover.hidden = false; } else { cover.hidden = true; }
+  }
+  function fadeIn() {
+    audio.volume = 0;
+    const step = setInterval(() => {
+      audio.volume = Math.min(1, audio.volume + 0.05);
+      if (audio.volume >= 1) clearInterval(step);
+    }, 75); // ~1,5 с плавного нарастания
+  }
+  async function play() {
+    try { await audio.play(); fadeIn(); } catch (e) { /* браузер не дал запустить */ }
+  }
+  audio.addEventListener('play', () => {
+    player.classList.add('is-playing');
+    $('playBtn').setAttribute('aria-label', 'Пауза');
+  });
+  audio.addEventListener('pause', () => {
+    player.classList.remove('is-playing');
+    $('playBtn').setAttribute('aria-label', 'Включить нашу песню');
+  });
+  audio.addEventListener('ended', () => { load(idx + 1); play(); });
+  $('playBtn').addEventListener('click', () => (audio.paused ? play() : audio.pause()));
+  $('nextBtn').addEventListener('click', () => { load(idx + 1); play(); });
+  $('nextBtn').hidden = tracks.length < 2;
+  load(0);
+  player.hidden = false;
+})();

@@ -29,6 +29,22 @@
 
   <!-- 1. Hero -->
   <header class="hero">
+    <!-- Плеер «наша песня» -->
+    <div class="player" id="player" hidden>
+      <button class="player__btn" id="playBtn" aria-label="Включить нашу песню">
+        <span class="player__disc"><img id="playerCover" alt="" hidden><svg class="player__heart"><use href="#heart"/></svg></span>
+        <svg class="player__icon player__icon--play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+        <svg class="player__icon player__icon--pause" viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>
+      </button>
+      <div class="player__info">
+        <span class="player__label">наша песня</span>
+        <span class="player__title" id="playerTitle"></span>
+      </div>
+      <button class="player__next" id="nextBtn" aria-label="Следующая песня" hidden>
+        <svg viewBox="0 0 24 24"><path d="M6 6l9 6-9 6zM16 6h2v12h-2z" fill="currentColor"/></svg>
+      </button>
+      <audio id="audio" preload="none"></audio>
+    </div>
     <p class="script">Серёжа &amp; Илона</p>
     <h1><span class="blur-word locked" id="heroHalf" data-secret>Полгода</span><br><em>вместе</em></h1>
     <p class="hero__date">с <time id="startDate" datetime="2026-06-02T22:30">2 июня 2026</time></p>
@@ -129,6 +145,7 @@
     <p class="script">Это только <span id="debugUnlock" class="debug-word">начало</span></p>
   </footer>
 
+  <script src="music/playlist.js"></script>
   <script src="js/love-words.js"></script>
   <script src="js/main.js"></script>
 </body>

@@ -450,3 +450,41 @@ svg { width: 100%; height: 100%; }
 .plans__forever { box-shadow: 0 0 0 2px var(--accent), var(--shadow); }
 .plans__forever label, .plans__forever label:has(input:checked) { font-weight: 700; text-decoration: line-through; text-decoration-color: var(--accent); text-decoration-thickness: 2px; color: var(--accent); }
 .plans__forever.is-nope { animation: env-shake .45s ease-in-out; }
+
+/* Плеер «наша песня» */
+.player {
+  position: fixed; top: 12px; right: 12px; z-index: 80;
+  display: flex; align-items: center; gap: .6rem;
+  max-width: calc(100% - 24px); padding: 6px 10px 6px 6px; border-radius: 999px;
+  background: rgba(255, 255, 255, .75); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+}
+.player[hidden] { display: none; }
+.player__btn { position: relative; width: 44px; height: 44px; flex: none; border-radius: 50%; }
+.player__disc {
+  position: absolute; inset: 0; border-radius: 50%; overflow: hidden;
+  background: radial-gradient(circle, var(--pink) 0 18%, #3D2C3E 19% 100%);
+  display: grid; place-items: center;
+  animation: spin 6s linear infinite; animation-play-state: paused;
+}
+.player__disc img { width: 100%; height: 100%; object-fit: cover; }
+.player__heart { width: 12px; height: 12px; color: var(--accent); }
+.player__disc img:not([hidden]) + .player__heart { display: none; }
+.player.is-playing .player__disc { animation-play-state: running; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.player__icon {
+  position: absolute; inset: 12px; width: 20px; height: 20px; color: #fff;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .6));
+}
+.player__icon--pause, .player.is-playing .player__icon--play { display: none; }
+.player.is-playing .player__icon--pause { display: block; opacity: 0; transition: opacity .2s; }
+.player.is-playing .player__btn:hover .player__icon--pause,
+.player.is-playing .player__btn:focus-visible .player__icon--pause { opacity: 1; }
+.player__info { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
+.player__label { font-family: 'Marck Script', cursive; color: var(--accent); font-size: 1rem; }
+.player__title {
+  font-size: .8rem; font-weight: 600; max-width: 150px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.player__next { width: 36px; height: 36px; padding: 8px; flex: none; color: var(--accent); border-radius: 50%; }
+.player__next[hidden] { display: none; }
