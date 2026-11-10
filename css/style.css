@@ -338,3 +338,18 @@ svg { width: 100%; height: 100%; }
 }
 .polaroid--dark.locked::after { opacity: .92; }
 .polaroid--dark.locked figcaption { filter: url(#pixelate) blur(3px); user-select: none; }
+
+/* Причина №6 — золотое сияние */
+.card--gold .card__front {
+  background: linear-gradient(135deg, #F6C177, #FFE8B0 50%, #E8A74E);
+  color: #FFF8E7;
+}
+.card--gold .card__back {
+  background: linear-gradient(160deg, #FFFBF0, #FFF1D6);
+  border: 2px solid #F6C177; color: #7A4E12;
+}
+.card--gold .card__front, .card--gold .card__back { animation: gold-glow 2.6s ease-in-out infinite; }
+@keyframes gold-glow {
+  0%, 100% { box-shadow: 0 0 12px 2px rgba(246, 193, 119, .45), 0 10px 30px rgba(232, 167, 78, .25); }
+  50%      { box-shadow: 0 0 28px 8px rgba(246, 193, 119, .8),  0 10px 40px rgba(232, 167, 78, .45); }
+}
