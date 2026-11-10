@@ -90,6 +90,41 @@ svg { width: 100%; height: 100%; }
   font-weight: 700; color: var(--accent);
 }
 .timeline li.unlocking > * { transition: filter 1.2s var(--ease); }
+/* Особая карточка — 2 июня */
+.timeline li.special {
+  font-weight: 700;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#FFF7F9, #FFF7F9) padding-box,
+    linear-gradient(120deg, var(--pink), var(--accent), var(--lavender), var(--accent), var(--pink)) border-box;
+  background-size: 100% 100%, 300% 300%;
+  animation: border-flow 6s linear infinite, glow 2.8s ease-in-out infinite;
+}
+.timeline li.special h3 {
+  font-size: 1.6rem;
+  background: linear-gradient(90deg, var(--accent), #B05CC9);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.timeline li.special::before { animation: beat 1.4s ease-in-out infinite; background: var(--accent); }
+@keyframes border-flow { to { background-position: 0 0, 300% 0; } }
+@keyframes glow {
+  50% { box-shadow: 0 0 0 4px rgba(214, 69, 106, .08), 0 12px 40px rgba(214, 69, 106, .35); }
+}
+.special__hearts { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+.special__hearts svg {
+  position: absolute; bottom: 10%; width: 14px; height: 14px; color: var(--accent);
+  opacity: 0; animation: float-up 4s ease-in infinite;
+}
+.special__hearts svg:nth-child(1) { right: 8%;  animation-delay: 0s; }
+.special__hearts svg:nth-child(2) { right: 18%; animation-delay: .8s; width: 10px; height: 10px; }
+.special__hearts svg:nth-child(3) { right: 4%;  animation-delay: 1.6s; width: 18px; height: 18px; }
+.special__hearts svg:nth-child(4) { right: 26%; animation-delay: 2.4s; }
+.special__hearts svg:nth-child(5) { right: 12%; animation-delay: 3.2s; width: 12px; height: 12px; }
+@keyframes float-up {
+  0% { transform: translateY(0) scale(.6); opacity: 0; }
+  20% { opacity: .8; }
+  100% { transform: translateY(-90px) translateX(-10px) scale(1.1); opacity: 0; }
+}
 .timeline time { color: var(--accent); font-weight: 700; font-size: .9rem; }
 .timeline h3 { font-size: 1.3rem; margin: .2rem 0; }
 
