@@ -6,16 +6,19 @@
 
 Читает ID3v2-теги (название TIT2, исполнитель TPE1, обложка APIC),
 сохраняет обложки в music/covers/*.webp (300x300) и пишет music/playlist.js.
-Порядок треков — по имени файла (можно назвать 01 ..., 02 ...).
+Порядок треков — по числу в начале имени файла ("3. ...", "13. ..."), затем по имени.
 Если тегов нет — название берётся из имени файла ("Исполнитель - Название.mp3").
+Если в mp3 нет обложки — берётся картинка рядом с тем же именем
+("3. песня.jpg") или общая music/cover.jpg (.png/.webp тоже можно).
 """
 import io
 import json
+import re
 import struct
 import sys
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageOps
 
 ROOT = Path(__file__).resolve().parent.parent
 MUSIC = ROOT / 'music'
@@ -81,10 +84,31 @@ def read_id3(path: Path) -> dict:
     return tags
 
 
+IMG_EXTS = ('.jpg', '.jpeg', '.png', '.webp')
+
+
+def track_key(p: Path):
+    m = re.match(r'\s*(\d+)', p.name)
+    return (int(m.group(1)) if m else float('inf'), p.name.lower())
+
+
+def external_cover(mp3: Path):
+    for base in (mp3.with_suffix(''), MUSIC / 'cover'):
+        for ext in IMG_EXTS:
+            f = Path(str(base) + ext)
+            if f.exists():
+                return f.read_bytes()
+    return None
+
+
+def clean_title(title: str) -> str:
+    return re.sub(r'^\s*\d+\s*[.)\-]?\s*', '', title)
+
+
 def main():
     MUSIC.mkdir(exist_ok=True)
     COVERS.mkdir(exist_ok=True)
-    files = sorted(MUSIC.glob('*.mp3'), key=lambda p: p.name.lower())
+    files = sorted(MUSIC.glob('*.mp3'), key=track_key)
     playlist = []
     for mp3 in files:
         tags = read_id3(mp3)
@@ -93,13 +117,15 @@ def main():
             stem = mp3.stem
             if ' - ' in stem:
                 artist, title = [s.strip() for s in stem.split(' - ', 1)]
+                artist = clean_title(artist)
             else:
-                title = stem
+                title = clean_title(stem)
         cover = None
-        if tags.get('APIC'):
+        art = tags.get('APIC') or external_cover(mp3)
+        if art:
             try:
-                img = Image.open(io.BytesIO(tags['APIC'])).convert('RGB')
-                img = img.resize((300, 300), Image.LANCZOS) if img.size != (300, 300) else img
+                img = Image.open(io.BytesIO(art)).convert('RGB')
+                img = ImageOps.fit(img, (300, 300), method=Image.LANCZOS)
                 out = COVERS / f'{mp3.stem}.webp'
                 img.save(out, 'WEBP', quality=80)
                 cover = f'music/covers/{out.name}'
