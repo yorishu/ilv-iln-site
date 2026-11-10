@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Полгода вместе</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Nunito:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- SVG-спрайт с сердцем -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="heart" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.2C.3 8.4 2.2 4 6.3 4c2.3 0 3.9 1.3 5.7 3.4C13.8 5.3 15.4 4 17.7 4 21.8 4 23.7 8.4 22 11.8 19.5 16.4 12 21 12 21z" fill="currentColor"/></symbol>
+  </svg>
+
+  <div class="petals" aria-hidden="true"></div>
+
+  <!-- 1. Hero -->
+  <header class="hero">
+    <p class="script">Имя &amp; Имя</p>
+    <h1>Полгода<br><em>вместе</em></h1>
+    <p class="hero__date">с <time id="startDate" datetime="2026-05-10">10 мая 2026</time></p>
+    <a href="#counter" class="scroll-down" aria-label="Листать вниз">
+      <svg viewBox="0 0 24 24" width="28" height="28"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </a>
+  </header>
+
+  <main>
+    <!-- 2. Счётчик -->
+    <section id="counter" class="section reveal">
+      <h2>Мы вместе уже</h2>
+      <div class="counter">
+        <div><span id="c-days">0</span><small>дней</small></div>
+        <div><span id="c-hours">0</span><small>часов</small></div>
+        <div><span id="c-min">0</span><small>минут</small></div>
+        <div><span id="c-sec">0</span><small>секунд</small></div>
+      </div>
+    </section>
+
+    <!-- 3. Таймлайн -->
+    <section class="section">
+      <h2 class="reveal">Наша история</h2>
+      <ol class="timeline">
+        <li class="reveal"><time>10 мая</time><h3>Знакомство</h3><p>Тут будет короткий рассказ о том, как всё началось.</p></li>
+        <li class="reveal"><time>17 мая</time><h3>Первое свидание</h3><p>Где были, что запомнилось.</p></li>
+        <li class="reveal"><time>июль</time><h3>Первая поездка</h3><p>Куда ездили вместе.</p></li>
+        <li class="reveal"><time>10 ноября</time><h3>Полгода!</h3><p>И это только начало.</p></li>
+      </ol>
+    </section>
+
+    <!-- 4. Галерея -->
+    <section class="section">
+      <h2 class="reveal">Наши моменты</h2>
+      <div class="gallery">
+        <!-- Заменить на реальные фото: <img src="img/1.webp" alt="..." loading="lazy"> -->
+        <figure class="polaroid reveal"><div class="ph"></div><figcaption>подпись</figcaption></figure>
+        <figure class="polaroid reveal"><div class="ph"></div><figcaption>подпись</figcaption></figure>
+        <figure class="polaroid reveal"><div class="ph"></div><figcaption>подпись</figcaption></figure>
+        <figure class="polaroid reveal"><div class="ph"></div><figcaption>подпись</figcaption></figure>
+        <figure class="polaroid reveal"><div class="ph"></div><figcaption>подпись</figcaption></figure>
+        <figure class="polaroid reveal"><div class="ph"></div><figcaption>подпись</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- 5. Причины -->
+    <section class="section">
+      <h2 class="reveal">За что я тебя люблю</h2>
+      <p class="hint reveal">нажми на карточку</p>
+      <div class="cards">
+        <button class="card reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">Причина №1</span></button>
+        <button class="card reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">Причина №2</span></button>
+        <button class="card reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">Причина №3</span></button>
+        <button class="card reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">Причина №4</span></button>
+        <button class="card reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">Причина №5</span></button>
+        <button class="card reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">Причина №6</span></button>
+      </div>
+    </section>
+
+    <!-- 6. Письмо -->
+    <section class="section">
+      <h2 class="reveal">Тебе письмо</h2>
+      <button class="envelope reveal" id="envelope" aria-label="Открыть письмо">
+        <span class="envelope__flap"></span>
+        <span class="envelope__seal"><svg><use href="#heart"/></svg></span>
+      </button>
+      <div class="letter" id="letter" hidden>
+        <p id="letterText" data-text="Моя любимая, сегодня ровно полгода, как мы вместе. Здесь будет твоё письмо…"></p>
+      </div>
+    </section>
+
+    <!-- 7. Планы -->
+    <section class="section">
+      <h2 class="reveal">Наши мечты</h2>
+      <ul class="plans reveal">
+        <li><label><input type="checkbox"> Поехать к морю</label></li>
+        <li><label><input type="checkbox"> Встретить Новый год вместе</label></li>
+        <li><label><input type="checkbox"> Увидеть северное сияние</label></li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- 8. Финал -->
+  <footer class="finale">
+    <button class="big-heart" id="bigHeart" aria-label="Нажми на сердце"><svg><use href="#heart"/></svg></button>
+    <p class="script">Это только начало</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
