@@ -290,3 +290,6 @@ svg { width: 100%; height: 100%; }
   .reveal { opacity: 1; transform: none; }
   html { scroll-behavior: auto; }
 }
+
+/* Готическая подпись под рисунком */
+.gothic { font-family: 'UnifrakturMaguntia', serif; font-size: 1.5rem; }
