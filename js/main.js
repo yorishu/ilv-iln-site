@@ -54,6 +54,7 @@ function updateLock() {
     if (!wasFirst) celebrate(); // праздник — только если открылось на глазах
     revealSecrets();
     $('heroHalf').classList.remove('locked');
+    $('photoUs').classList.remove('locked');
     card.classList.add('unlocking');
     card.classList.remove('locked');
     return;
