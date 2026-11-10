@@ -8,6 +8,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=UnifrakturMaguntia&family=Nunito:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    // Safari/iOS не умеет SVG-фильтр (пикселизацию) на HTML-элементах — там только блюр
+    (function () {
+      var ua = navigator.userAgent;
+      var webkitOnly = /iPhone|iPad|iPod/.test(ua) || (/AppleWebKit/.test(ua) && !/Chrome|Chromium|Edg|OPR/.test(ua));
+      if (webkitOnly) document.documentElement.classList.add('no-svg-filter');
+    })();
+  </script>
 </head>
 <body>
   <!-- SVG-спрайт с сердцем -->
@@ -113,7 +121,7 @@
         <button class="card reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">за твоё тепло и заботу 🔥</span></button>
         <button class="card reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">за всё то время, что мы провели вместе 🧑🏻‍🤝‍👩🏻</span></button>
         <button class="card reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">за твоё прекрасное чувство юмора (●'◡'●)</span></button>
-        <button class="card reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">за твою &nbsp;<em>незабываемую</em>&nbsp; улыбку!</span></button>
+        <button class="card reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">за твою <em class="spaced">незабываемую</em> улыбку!</span></button>
         <button class="card card--gold reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">за то, что ты рядом со мной 😽</span></button>
       </div>
     </section>

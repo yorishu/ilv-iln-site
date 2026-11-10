@@ -523,3 +523,31 @@ svg { width: 100%; height: 100%; }
   filter: blur(3px); pointer-events: none; user-select: none; -webkit-touch-callout: none;
 }
 .lock-bubble { top: 4.5rem; }
+
+/* ===== Исправления для iPhone / Safari ===== */
+
+/* 1. Без SVG-пикселизации: только блюр, посильнее (текст и так подменён love-словами) */
+html.no-svg-filter .blur-word.locked { filter: blur(14px); }
+html.no-svg-filter .timeline li.locked > :not(.lock-note):not(.final__dot) { filter: blur(8px); }
+html.no-svg-filter .polaroid--dark.locked > img { filter: blur(10px) grayscale(1) brightness(.3) contrast(1.4); }
+html.no-svg-filter .polaroid--dark.locked figcaption { filter: blur(5px); }
+
+/* 3. Карточки: префикс для Safari + в закрытом разделе оборот спрятан, блюр — на каждой карточке */
+.card__front, .card__back { -webkit-backface-visibility: hidden; }
+.locked-section.is-locked > .cards:not(h2):not(.lock-bubble) { filter: none; }
+.locked-section.is-locked .card { filter: blur(3px); }
+.locked-section.is-locked .card__back { visibility: hidden; }
+
+/* 4. Отступы вокруг «незабываемую» вместо неразрывных пробелов */
+em.spaced { margin: 0 .3em; }
+
+/* 2. Компактный плеер на телефоне: без названия, пластинка справа */
+@media (max-width: 600px) {
+  .player { flex-direction: row-reverse; gap: .2rem; padding: 4px 4px 4px 6px; top: 10px; right: 10px; }
+  .player__info { display: none; }
+  .player__btn { width: 40px; height: 40px; }
+  .player__icon { inset: 10px; }
+  .player__vol, .player__next { width: 34px; height: 34px; }
+  .player__hint { left: auto; right: 0; }
+  .player__hint::before { left: auto; right: 14px; }
+}
