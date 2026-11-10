@@ -517,7 +517,7 @@ svg { width: 100%; height: 100%; }
 
 /* Разделы, закрытые до полгода: лёгкий блюр + всплывашка как у письма */
 .locked-section { position: relative; }
-.locked-section > :not(h2):not(.lock-bubble) { transition: filter 1.2s var(--ease); }
+.locked-section > :not(h2):not(.lock-bubble) { transition: filter 1.2s var(--ease), opacity .7s var(--ease), transform .7s var(--ease); }
 .locked-section.is-locked { cursor: pointer; }
 .locked-section.is-locked > :not(h2):not(.lock-bubble) {
   filter: blur(3px); pointer-events: none; user-select: none; -webkit-touch-callout: none;
