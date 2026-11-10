@@ -80,6 +80,8 @@ svg { width: 100%; height: 100%; }
 }
 .timeline li.locked > :not(.lock-note) { filter: url(#pixelate) blur(5px); user-select: none; }
 .lock-note { display: none; }
+.soft-blur { filter: blur(1.5px); opacity: .7; transition: filter .3s, opacity .3s; }
+.soft-blur:hover { filter: none; opacity: 1; }
 .blur-word { display: inline-block; transition: filter 1.2s var(--ease); }
 .blur-word.locked { filter: url(#pixelate) blur(10px); user-select: none; }
 .timeline li.locked .lock-note {
