@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Серёжа &amp; Илона</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=UnifrakturMaguntia&family=Nunito:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- SVG-спрайт с сердцем -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="heart" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.2C.3 8.4 2.2 4 6.3 4c2.3 0 3.9 1.3 5.7 3.4C13.8 5.3 15.4 4 17.7 4 21.8 4 23.7 8.4 22 11.8 19.5 16.4 12 21 12 21z" fill="currentColor"/></symbol>
+  </svg>
+  <!-- Фильтр пикселизации -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="pixelate" x="0" y="0" width="100%" height="100%">
+      <feFlood x="5" y="5" width="2" height="2"/>
+      <feComposite width="12" height="12"/>
+      <feTile result="grid"/>
+      <feComposite in="SourceGraphic" in2="grid" operator="in"/>
+      <feMorphology operator="dilate" radius="6"/>
+    </filter>
+  </svg>
+
+  <div class="petals" aria-hidden="true"></div>
+
+  <!-- 1. Hero -->
+  <header class="hero">
+    <!-- Плеер «наша песня» -->
+    <div class="player" id="player" hidden>
+      <button class="player__btn" id="playBtn" aria-label="Включить нашу песню">
+        <span class="player__disc"><img id="playerCover" alt="" hidden><svg class="player__heart"><use href="#heart"/></svg></span>
+        <svg class="player__icon player__icon--play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+        <svg class="player__icon player__icon--pause" viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>
+      </button>
+      <div class="player__info">
+        <span class="player__title" id="playerTitle"></span>
+      </div>
+      <button class="player__vol" id="volBtn" aria-label="Громкость: 50%">❤️</button>
+      <button class="player__next" id="nextBtn" aria-label="Следующая песня" hidden>
+        <svg viewBox="0 0 24 24"><path d="M6 6l9 6-9 6zM16 6h2v12h-2z" fill="currentColor"/></svg>
+      </button>
+      <audio id="audio" preload="none"></audio>
+      <div class="player__hint" id="playerHint" role="status" hidden>
+        Нажми на пластинку, чтобы включить нашу песню 🎵
+        <button class="player__hint-close" id="playerHintClose" aria-label="Закрыть подсказку">×</button>
+      </div>
+    </div>
+    <p class="script">Серёжа &amp; Илона</p>
+    <h1><span class="blur-word locked" id="heroHalf" data-secret>Полгода</span><br><em>вместе</em></h1>
+    <p class="hero__date">с <time id="startDate" datetime="2026-06-02T22:30">2 июня 2026</time></p>
+    <a href="#counter" class="scroll-down" aria-label="Листать вниз">
+      <svg viewBox="0 0 24 24" width="28" height="28"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </a>
+  </header>
+
+  <main>
+    <!-- 2. Счётчик -->
+    <section id="counter" class="section reveal">
+      <h2>Мы вместе уже</h2>
+      <div class="counter">
+        <div><span id="c-days">0</span><small>дней</small></div>
+        <div><span id="c-hours">0</span><small>часов</small></div>
+        <div><span id="c-min">0</span><small>минут</small></div>
+        <div><span id="c-sec">0</span><small>секунд</small></div>
+      </div>
+    </section>
+
+    <!-- 3. Таймлайн -->
+    <section class="section">
+      <h2 class="reveal">Наша <span class="underline">история</span></h2>
+      <ol class="timeline">
+        <li class="reveal"><time>22 апреля</time><h3>Знакомство 📱</h3><p>Первое сообщение в случайный вечер среды 😉</p></li>
+        <li class="reveal"><time>31 мая</time><h3>Колесо обозрения 🎡</h3><p>Наша первая личная встреча, в тот день я увидел твою мордочку в первый раз 😘</p></li>
+        <li class="reveal special"><span class="special__hearts" aria-hidden="true"><svg><use href="#heart"/></svg><svg><use href="#heart"/></svg><svg><use href="#heart"/></svg><svg><use href="#heart"/></svg><svg><use href="#heart"/></svg></span><time>2 июня</time><h3><span class="grad">Мы вместе</span> 🧑🏻‍🤝‍👩🏻</h3><p>Тот самый двор, та самая лавочка</p></li>
+        <li class="reveal"><time>11 июня</time><h3>Первая ночь 🌃</h3><p>Твой диплом, наш вечер и совместная ночь <span class="soft-blur">(без пошлостей!!!)</span></p></li>
+        <li class="reveal"><time>10 августа</time><h3>Автовокзал 🚗</h3><p>Ты проводила меня к моему незабываемому опыту, через который я понял, насколько сильно я дорожу тобой</p></li>
+        <li class="reveal"><time>2 ноября</time><h3>«Полгода» 😂</h3><p>Так ждали, что отметили на месяц раньше</p></li>
+        <li class="reveal locked final" id="realHalfYear"><span class="final__dot" aria-hidden="true"><svg><use href="#heart"/></svg></span><span class="final__stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="lock-note" aria-live="polite"></span><time>2 декабря</time><h3 data-secret>Полгода!</h3><p data-secret>И это только начало.</p></li>
+      </ol>
+    </section>
+
+    <!-- 4. Галерея -->
+    <section class="section locked-section is-locked" data-verb="посмотреть">
+      <h2 class="reveal">Наши моменты</h2>
+      <div class="env-bubble lock-bubble" role="status" aria-live="polite" hidden>
+        <span class="env-bubble__face" aria-hidden="true">🤭</span>
+        <span class="env-bubble__text"></span>
+      </div>
+      <div class="gallery">
+        <figure class="polaroid reveal"><img src="img/1.webp" alt="Илона на колесе обозрения" width="1000" height="1000" loading="lazy" decoding="async"><figcaption>мы в небесах 💕</figcaption></figure>
+        <figure class="polaroid reveal"><img src="img/2.webp" alt="Мы в кинотеатре" width="1000" height="1000" loading="lazy" decoding="async"><figcaption>мы в закулисье.. 😶</figcaption></figure>
+        <figure class="polaroid reveal"><img src="img/3.webp" alt="Прогулка около озера" width="1000" height="1000" loading="lazy" decoding="async"><figcaption>прогулка около озера была 28 июля! 😯🤩</figcaption></figure>
+        <figure class="polaroid polaroid--small reveal"><img src="img/4.webp" alt="Граффити-туалет" width="1000" height="1000" loading="lazy" decoding="async"><figcaption>летали на паутине с полным погружением (а туалет-то реально красивый хехехе) 😮</figcaption></figure>
+        <figure class="polaroid reveal"><img src="img/5.webp" alt="Наше селфи" width="1000" height="1000" loading="lazy" decoding="async"><figcaption>наш первый Хеллоуин! 👻</figcaption></figure>
+        <figure class="polaroid polaroid--dark locked reveal" id="photoUs"><img src="img/6.webp" alt="Мы — рисунок" width="1000" height="1000" loading="lazy" decoding="async"><figcaption><span class="gothic"><em data-secret>us</em></span></figcaption></figure>
+      </div>
+    </section>
+
+    <!-- 5. Причины -->
+    <section class="section locked-section is-locked" data-verb="почитать">
+      <h2 class="reveal">За что я тебя люблю</h2>
+      <div class="env-bubble lock-bubble" role="status" aria-live="polite" hidden>
+        <span class="env-bubble__face" aria-hidden="true">🤭</span>
+        <span class="env-bubble__text"></span>
+      </div>
+      <p class="hint reveal">нажми на карточку</p>
+      <div class="cards">
+        <button class="card reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">за твои прекрасные глаза 👀</span></button>
+        <button class="card reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">за твоё тепло и заботу 🔥</span></button>
+        <button class="card reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">за всё то время, что мы провели вместе 🧑🏻‍🤝‍👩🏻</span></button>
+        <button class="card reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">за твоё прекрасное чувство юмора (●'◡'●)</span></button>
+        <button class="card reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">за твою &nbsp;<em>незабываемую</em>&nbsp; улыбку!</span></button>
+        <button class="card card--gold reveal"><span class="card__front"><svg><use href="#heart"/></svg></span><span class="card__back">за то, что ты рядом со мной 😽</span></button>
+      </div>
+    </section>
+
+    <!-- 6. Письмо -->
+    <section class="section">
+      <h2 class="reveal">Тебе письмо</h2>
+      <div class="env-stage reveal" id="envStage">
+        <button class="env" id="envelope" aria-label="Открыть письмо">
+          <span class="env__back"></span>
+          <span class="env__paper" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="env__pocket"></span>
+          <span class="env__flap"></span>
+          <span class="env__seal"><svg><use href="#heart"/></svg></span>
+        </button>
+        <div class="env-bubble" id="envBubble" role="status" aria-live="polite" hidden>
+          <span class="env-bubble__face" aria-hidden="true">🤭</span>
+          <span class="env-bubble__text" id="envBubbleText"></span>
+        </div>
+        <p class="hint">нажми на конверт</p>
+      </div>
+      <div class="letter" id="letter" hidden>
+        <p id="letterText" data-text="Лон, нет, не так, любовь моя(!!!), сегодня наконец-то наступил этот день, да, именно сегодня (хехехе), а не в ноябре! Нам с тобой стукнуло уже полгода, прям по-настоящему! Вот так вот, веришь? Я лично не верю, да и в ноябре не верил, ведь время рядом с тобой идёт настолько быстро, насколько я даже представить себе не мог. Я никогда не думал, что могу испытывать настолько большие чувства, к настолько маленькому человечку (хехехе), ну ладно, если без шуток, то реально, я не то что от тебя без ума, я, можно так сказать, зависим от тебя. От твоих глаз, от твоих губ, от твоей улыбки, от твоего голоса и от тебя в целом! Эти полгода дали мне понять, насколько сильно жизнь становится лучше, когда рядышком есть такой любимый человечек, когда от твоего голоса мне становится лучше, когда мне плохо, да и вообще, ты просто своим присутствием делаешь мою жизнь намного ярче и лучше. А вообще, вообще, когда дочитаешь, посмотри на меня, и дай мне закончить лично, я просто думаю, да и всегда думал, что живая речь намного живее и искреннее, чем все вот эти сообщения и т. д. Ну, в общем, смотри ты на меня уже, любимка &lt;3"></p>
+      </div>
+    </section>
+
+    <!-- 7. Планы -->
+    <section class="section locked-section is-locked" data-verb="помечтать">
+      <h2 class="reveal">Наши мечты</h2>
+      <div class="env-bubble lock-bubble" role="status" aria-live="polite" hidden>
+        <span class="env-bubble__face" aria-hidden="true">🤭</span>
+        <span class="env-bubble__text"></span>
+      </div>
+      <ul class="plans reveal">
+        <li><label><input type="checkbox"> Поехать к морю</label></li>
+        <li><label><input type="checkbox"> Встретить Новый год вместе</label></li>
+        <li class="plans__forever"><label><input type="checkbox" checked data-forever autocomplete="off"> Любить друг друга всю жизнь!</label></li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- 8. Финал -->
+  <footer class="finale">
+    <button class="big-heart" id="bigHeart" aria-label="Нажми на сердце"><svg><use href="#heart"/></svg></button>
+    <p class="script">Это только <span id="debugUnlock" class="debug-word">начало</span></p>
+  </footer>
+
+  <script src="music/playlist.js"></script>
+  <script src="js/love-words.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
