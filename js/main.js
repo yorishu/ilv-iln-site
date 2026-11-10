@@ -232,13 +232,57 @@ $('bigHeart').addEventListener('click', (ev) => {
     $('playerTitle').title = $('playerTitle').textContent;
     if (t.cover) { cover.src = t.cover; cover.hidden = false; } else { cover.hidden = true; }
   }
+  // Громкость сердечками: 🖤 25% → ❤️ 50% → 💖 100%
+  const LEVELS = [{ icon: '🖤', v: 0.25 }, { icon: '❤️', v: 0.5 }, { icon: '💖', v: 1 }];
+  let level = 1;
+  try {
+    const saved = localStorage.getItem('volLevel');
+    if (saved !== null && +saved >= 0 && +saved < LEVELS.length) level = +saved;
+  } catch (e) {}
+  // На iPhone audio.volume не меняется — там громкость через Web Audio
+  audio.volume = 0.5;
+  const volumeLocked = audio.volume === 1;
+  audio.volume = 1;
+  let gain = null;
+  const output = () => (gain ? gain.gain.value : audio.volume);
+  const setOutput = (v) => { if (gain) gain.gain.value = v; else audio.volume = v; };
+  function ensureGain() {
+    if (!volumeLocked || gain) return;
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const node = ctx.createGain();
+      ctx.createMediaElementSource(audio).connect(node).connect(ctx.destination);
+      gain = node;
+      if (ctx.state === 'suspended') ctx.resume();
+    } catch (e) { /* остаётся системная громкость */ }
+  }
+  const target = () => LEVELS[level].v;
+  function renderVol() {
+    const b = $('volBtn');
+    b.textContent = LEVELS[level].icon;
+    b.setAttribute('aria-label', `Громкость: ${LEVELS[level].v * 100}%`);
+    b.title = `${LEVELS[level].v * 100}%`;
+  }
+  let fading;
   function fadeIn() {
-    audio.volume = 0;
-    const step = setInterval(() => {
-      audio.volume = Math.min(1, audio.volume + 0.05);
-      if (audio.volume >= 1) clearInterval(step);
+    clearInterval(fading);
+    setOutput(0);
+    fading = setInterval(() => {
+      const v = Math.min(target(), output() + target() / 20);
+      setOutput(v);
+      if (v >= target()) clearInterval(fading);
     }, 75); // ~1,5 с плавного нарастания
   }
+  $('volBtn').addEventListener('click', () => {
+    level = (level + 1) % LEVELS.length;
+    try { localStorage.setItem('volLevel', level); } catch (e) {}
+    clearInterval(fading);
+    setOutput(target());
+    renderVol();
+    const b = $('volBtn');
+    b.classList.remove('is-bump'); void b.offsetWidth; b.classList.add('is-bump');
+  });
+  renderVol();
   async function play() {
     ensureGain();
     try { await audio.play(); fadeIn(); } catch (e) { /* браузер не дал запустить */ }
