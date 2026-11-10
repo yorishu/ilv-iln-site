@@ -551,3 +551,11 @@ em.spaced { margin: 0 .3em; }
   .player__hint { left: auto; right: 0; }
   .player__hint::before { left: auto; right: 14px; }
 }
+
+/* Переворот карточек без опоры на backface-visibility (Safari/Android):
+   каждая сторона скрывается ровно на середине поворота */
+.card__front, .card__back { transition: transform .6s var(--ease), visibility 0s linear .3s; }
+.card__back { visibility: hidden; }
+.card.is-flipped .card__back { visibility: visible; }
+.card.is-flipped .card__front { visibility: hidden; }
+.card__text { display: block; max-width: 100%; overflow-wrap: break-word; }
