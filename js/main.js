@@ -60,11 +60,17 @@ function updateLock() {
     card.classList.remove('locked');
     return;
   }
-  const d = Math.floor(left / 86400000);
-  const h = Math.floor(left / 3600000) % 24;
-  card.querySelector('.lock-note').textContent = d > 0
-    ? `🔒 Откроется через ${d} ${plural(d, ['день', 'дня', 'дней'])}`
-    : `🔒 Откроется через ${h} ${plural(h, ['час', 'часа', 'часов'])}… совсем скоро`;
+  const total = Math.ceil(left / 60000); // всего минут, округление вверх
+  const d = Math.floor(total / 1440);
+  const h = Math.floor(total / 60) % 24;
+  const m = total % 60;
+  // нулевые единицы не показываем: «22 дня 5 часов 12 минут», «3 часа 7 минут», «12 минут»
+  const parts = [];
+  if (d) parts.push(`${d} ${plural(d, ['день', 'дня', 'дней'])}`);
+  if (h) parts.push(`${h} ${plural(h, ['час', 'часа', 'часов'])}`);
+  if (m || !parts.length) parts.push(`${m} ${plural(m, ['минуту', 'минуты', 'минут'])}`);
+  card.querySelector('.lock-note').textContent =
+    `🔒 Откроется через ${parts.join(' ')}` + (d ? '' : '… совсем скоро');
 }
 function tick() {
   updateLock();
