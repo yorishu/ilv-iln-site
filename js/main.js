@@ -29,11 +29,29 @@ function plural(n, forms) {
   return forms[m10 === 1 && m100 !== 11 ? 0 : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? 1 : 2];
 }
 let forceUnlock = false;
+let firstCheck = true;
+function celebrate() {
+  if (reduceMotion) return;
+  const colors = ['#F6C177', '#E05A7A', '#B05CC9', '#FF8FAB', '#FFE8B0'];
+  for (let i = 0; i < 60; i++) {
+    const el = document.createElement('span');
+    const size = 10 + Math.random() * 18;
+    el.className = 'confetti';
+    el.innerHTML = heartSvg;
+    el.style.cssText = `left:${Math.random() * 100}vw;width:${size}px;height:${size}px;` +
+      `color:${colors[i % colors.length]};animation-duration:${2.5 + Math.random() * 2.5}s;animation-delay:${Math.random() * 1.2}s`;
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
+}
 function updateLock() {
   const card = $('realHalfYear');
   if (!card || !card.classList.contains('locked')) return;
   const left = HALF_YEAR - Date.now();
+  const wasFirst = firstCheck;
+  firstCheck = false;
   if (left <= 0 || forceUnlock) {
+    if (!wasFirst) celebrate(); // праздник — только если открылось на глазах
     revealSecrets();
     $('heroHalf').classList.remove('locked');
     card.classList.add('unlocking');
@@ -103,7 +121,7 @@ const special = document.querySelector('.timeline li.special');
 if (special) special.addEventListener('click', () => {
   if (reduceMotion) return;
   const r = special.getBoundingClientRect();
-  const cx = r.left + 2 - 23, cy = r.top + 2 + 31; // центр большой точки (+2px рамка)
+  const cx = r.left - 23, cy = r.top + 2 + 31; // центр большой точки (+2px рамка сверху)
   const colors = ['#E05A7A', '#B05CC9', '#FF8FAB', '#F4A261', '#C9184A'];
   for (let i = 0; i < 18; i++) {
     const el = document.createElement('span');
