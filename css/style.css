@@ -448,5 +448,5 @@ svg { width: 100%; height: 100%; }
 
 /* Мечта, которая уже выполнена — и снять галочку нельзя */
 .plans__forever { box-shadow: 0 0 0 2px var(--accent), var(--shadow); }
-.plans__forever label, .plans__forever label:has(input:checked) { font-weight: 700; text-decoration: none; color: var(--accent); }
+.plans__forever label, .plans__forever label:has(input:checked) { font-weight: 700; text-decoration: line-through; text-decoration-color: var(--accent); text-decoration-thickness: 2px; color: var(--accent); }
 .plans__forever.is-nope { animation: env-shake .45s ease-in-out; }
